@@ -4,5 +4,6 @@
     <Deploy />
   </Project>
   <Project Path="WLJ.Payments.AppHost/WLJ.Payments.AppHost.csproj" />
+  <Project Path="WLJ.Payments.Migrations/WLJ.Payments.Migrations.csproj" />
   <Project Path="WLJ.Payments.Server/WLJ.Payments.Server.csproj" />
 </Solution>
