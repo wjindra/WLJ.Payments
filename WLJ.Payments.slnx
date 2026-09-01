@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="frontend/frontend.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="WLJ.Payments.AppHost/WLJ.Payments.AppHost.csproj" />
+  <Project Path="WLJ.Payments.Server/WLJ.Payments.Server.csproj" />
+</Solution>
