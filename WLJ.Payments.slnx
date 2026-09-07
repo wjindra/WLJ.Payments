@@ -6,4 +6,5 @@
   <Project Path="WLJ.Payments.AppHost/WLJ.Payments.AppHost.csproj" />
   <Project Path="WLJ.Payments.Migrations/WLJ.Payments.Migrations.csproj" />
   <Project Path="WLJ.Payments.Server/WLJ.Payments.Server.csproj" />
+  <Project Path="WLJ.Payments.Tests/WLJ.Payments.Tests.csproj" />
 </Solution>

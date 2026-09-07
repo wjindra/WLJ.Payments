@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using WLJ.Payments.Migrations;
-using WLJ.Payments.Migrations.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,41 +30,12 @@ app.UseOutputCache();
 
 if (app.Environment.IsDevelopment())
 {
+    // Apply EF Core migrations on startup in development. Production deployments
+    // should run migrations as an explicit step rather than on app boot.
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<PaymentsDbContext>();
-    await db.Database.EnsureCreatedAsync();
+    await db.Database.MigrateAsync();
 }
-
-string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
-
-var api = app.MapGroup("/api");
-api.MapGet("weatherforecast", async (PaymentsDbContext db) =>
-{
-    var forecasts = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        })
-        .ToList();
-
-    db.WeatherForecasts.AddRange(forecasts);
-    await db.SaveChangesAsync();
-
-    return forecasts;
-})
-.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(5)))
-.WithName("GetWeatherForecast");
-
-api.MapGet("weatherforecast/history", async (PaymentsDbContext db) =>
-{
-    return await db.WeatherForecasts
-        .OrderByDescending(w => w.Id)
-        .Take(20)
-        .ToListAsync();
-})
-.WithName("GetWeatherHistory");
 
 app.MapDefaultEndpoints();
 
